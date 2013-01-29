@@ -1,5 +1,4 @@
-// Author: Emma Nelson
-
+// Author: Emma Nelsons
 import akka.actor.*
 
 // Immutable message sent to the queue with the passenger

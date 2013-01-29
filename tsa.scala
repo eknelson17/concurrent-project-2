@@ -1,4 +1,5 @@
 // Author: Emma Nelson
+import akka.actor.*
 
 // Sent to the Controller to tell it to create passengers
 case object SendPassengers
