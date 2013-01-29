@@ -17,7 +17,7 @@ class DocScanner(val nLines : Int, val queues : List) extends Actor {
 			if(random.nextInt(100) > 20) {
 				queues[nextLine] ! ToLine(passenger)
 				println("Passenger " + passenger + " is sent to queue " + nextLine + " by the Doc Scanner.")
-				nextLine = (nextLine = nextLine + 1) % numLines
+				nextLine = (nextLine + 1) % numLines
 			} else {
 				println("Passenger " + passenger + " has invalid documentation.")
 			}
