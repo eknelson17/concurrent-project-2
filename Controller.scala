@@ -1,19 +1,21 @@
 // Author: Emma Nelsons
-import akka.actor.*
+import akka.actor.Actor
+import akka.actor.ActorRef
+import scala.util.Random
 
 // Immutable message sent to the queue with the passenger
-case class GetPassenger() { passenger : val }
+case class GetPassenger(passenger : Int)
 
 // Creates and sends passengers into the system when the main tells 
 // it to. Closes everything else as possible.
-class Controller(var docScanner : ActorRef) extends Actor {
+class Controller(val docScanner : ActorRef, val jail : ActorRef) extends Actor {
 	val random = new Random()
 	var passNum = 1
 	
 	def receive = {
 		case SendPassengers =>
 			var numPass = random.nextInt(100)
-			for(i -> 1 to numPass) {
+			for(i <- 1 to numPass) {
 				docScanner ! GetPassenger(passNum)
 				passNum = 1 + passNum
 			}

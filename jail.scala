@@ -1,12 +1,14 @@
 // Author: Dan Lavoie
 // Edited by: Emma Nelson
-import akka.actor.*
+import akka.actor.Actor
+import akka.actor.ActorRef
+import scala.collection.mutable.MutableList
 
 //The Jail keeps a list of immutable passenger objects it is sent.
 //At the end of the day, it receives a message to put its passengers
 //in permanent lockup, and purges all of its passengers.
 class Jail extends Actor {
-	var passengers = new List.empty[ActorRef]
+	var passengers = new MutableList()
 	def receive = {
 		case Prisoner(passenger) =>
 			passengers = passengers ++ passenger

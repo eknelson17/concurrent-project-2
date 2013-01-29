@@ -1,6 +1,7 @@
-import akka.actor.*
-
 //Author: Dan Lavoie
+import akka.actor.Actor
+import akka.actor.ActorRef
+import scala.collection.mutable.MutableList
 
 //The security station processes passengers who move through the system.
 //It keeps track of bags and people sent through its line's scanners,
