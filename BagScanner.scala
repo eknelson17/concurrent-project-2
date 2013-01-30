@@ -1,27 +1,21 @@
 // Author: Maddison Hickson
-
-import akka.actor.*
-
-// Immutable message sent to the Security Station with the passenger
-// and the 
-case class ToSecurityStation() { val bag : (Int, Boolean) }
+// Edited By: Emma Nelson
+import akka.actor.Actor
+import akka.actor.ActorRef
+import scala.util.Random
 
 // Immutable message sent to the Queue to ask for a 
-case class NextBag() {}
+case class NextBag
 
-class BagScanner(val nLines : Int) extends Actor {
-	var hasPassed;
+class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor {
+	var hasPassed = true
 	val random = new Random()
 
-	def receive = {
-		case Init() =>
-		
-		case GetBag(bag) =>
-			if(random.next(5) = 1) {
-				SecurityStation[ToSecurityStation] ! ToSecurityStation((bag, false))
+	def receive = {	
+		case GetPassenger(bag) =>
+			if(random.nextInt(5) == 1) {
+				hasPassed = false
 			}
-			else{
-				SecurityStation[ToSecurityStation] ! ToSecurityStation((bag, true))
-			}
+			securityStation ! ToSecurityStation((bag, hasPassed))
 	}
 }

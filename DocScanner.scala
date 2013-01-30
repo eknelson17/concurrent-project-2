@@ -5,7 +5,7 @@ import scala.util.Random
 import scala.collection.mutable.MutableList
 
 // Immutable message sent to the queue with the passenger
-case class ToLine() { val passenger : Int }
+case class ToLine(passenger : Int)
 
 // Gets a passenger from the Controller, decides whether or not the
 // passenger's documentation is valid (80% chance it is) and sends them
