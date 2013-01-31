@@ -15,7 +15,13 @@ class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor
 		case GetPassenger(bag) =>
 			if(random.nextInt(5) == 1) {
 				hasPassed = false
+				println("The bag belonging to Passenger " + bag + " has failed inspection.")
+			} else {
+				println("The bag belonging to Passenger " + bag + " has passed inspection.")
 			}
 			securityStation ! ToSecurityStation((bag, hasPassed))
+			println("The bag belonging to Passenger " + bag + " was sent to the Security Station.")
+
+			// TODO Request the next bag from the Queue
 	}
 }

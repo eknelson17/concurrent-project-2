@@ -18,7 +18,7 @@ class DocScanner(val nLines : Int, val queues : MutableList[ActorRef]) extends A
 	def receive = {
 		case GetPassenger(passenger) =>
 			if(random.nextInt(100) > 20) {
-				queues.get(nextLine) ! ToLine(passenger)
+				queues.get(nextLine).head ! ToLine(passenger)
 				println("Passenger " + passenger + " is sent to queue " + nextLine + " by the Doc Scanner.")
 				nextLine = (nextLine + 1) % numLines
 			} else {

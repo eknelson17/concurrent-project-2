@@ -20,7 +20,15 @@ class BodyScanner(val nLines : Int, val securityStation : ActorRef) extends Acto
 		case GetPassenger(passenger) =>
 			if(random.nextInt(5) == 1) {
 				hasPassed = false
+				println("Passenger " + passenger + " has failed inspection.")
+			} else {
+				println("Passenger " + passenger + " has passed inspection.")
 			}
-			securityStation! ToSecurityStation((passenger, hasPassed))
+			securityStation ! ToSecurityStation((passenger, hasPassed))
+			println("Passenger " + passenger + " has been sent to the Security Station.")
+
+			// TODO request the next passenger from the Queue
+
+		// TODO add close functionality
 	}
 }
