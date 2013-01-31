@@ -59,6 +59,7 @@ object tsa {
 		println("The Controller has been started.")
 
 		// Send passengers - 20% chance per millisecond
+		val random = new Random()
 		while (System.currentTimeMillis != endTime) {
 			if(random.nextInt(100) <= 20) {
 				controller ! SendPassengers
