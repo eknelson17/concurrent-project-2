@@ -5,9 +5,13 @@ import akka.actor.ActorRef
 import scala.util.Random
 import scala.collection.mutable.MutableList
 
-class BodyScanner(val nLines : Int, val securityStation : ActorRef) extends Actor {
+class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	var hasPassed = true
 	val random = new Random()
+
+	override def preStart = {
+		securityStation ! SendBodyScanner(self)
+	}
 
 	def receive = {	
 		case GetPassenger(passenger) =>
@@ -19,7 +23,9 @@ class BodyScanner(val nLines : Int, val securityStation : ActorRef) extends Acto
 			}
 			securityStation ! ToSecurityStation(new Tuple2(passenger : Int, hasPassed : Boolean))
 			println("Passenger " + passenger + " has been sent to the Security Station.")
+	}
 
-		// TODO add close functionality
+	override def postStop {
+		securityStation ! ScannerClosed(id)
 	}
 }

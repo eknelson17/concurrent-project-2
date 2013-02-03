@@ -8,6 +8,10 @@ class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor
 	var hasPassed = true
 	val random = new Random()
 
+	override def preStart = {
+		securityStation ! SendBagScanner(self)
+	}
+
 	def receive = {	
 		case GetPassenger(bag) =>
 			if(random.nextInt(5) == 1) {
@@ -18,7 +22,9 @@ class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor
 			}
 			securityStation ! ToSecurityStation(new Tuple2(bag : Int, hasPassed : Boolean))
 			println("The bag belonging to Passenger " + bag + " was sent to the Security Station.")
+	}
 
-		// TODO add close functionality
+	override def postStop {
+		securityStation ! ScannerClosed
 	}
 }

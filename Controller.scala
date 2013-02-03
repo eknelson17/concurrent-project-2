@@ -13,7 +13,9 @@ import akka.actor.PoisonPill
 class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 	val random = new Random()
 	var passNum = 1
-	var securityStations = MutableList[ActorRef]()
+	var securityStations = MutableList[ActorRef]()	
+	var bodyScanners = MutableList[ActorRef]()
+	var bagScanners = MutableList[ActorRef]()
 	var docScanner = system.actorOf(Props(new DocScanner(numLines)))
 
 	override def preStart = {
@@ -21,9 +23,6 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 
 		val jail = system.actorOf(Props(new Jail()))
 		println("The Jail has been started.")
-		
-		var bodyScanners = MutableList[ActorRef]()
-		var bagScanners = MutableList[ActorRef]()
 
 		// Create all the security stations, bag scanners, and body scanners
 		// and add them to the appropriate list to be sent to the DocScanner

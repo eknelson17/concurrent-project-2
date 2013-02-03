@@ -1,4 +1,5 @@
 //Author: Dan Lavoie
+// Editied by: Emma Nelson
 import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.collection.mutable.MutableList
@@ -11,10 +12,24 @@ import scala.collection.mutable.MutableList
 class SecurityStation(val line : Int) extends Actor {
 	val stationLine = line
 	var passengers = new MutableList();
+	var bagScanner = null
+	var bodyScanner = null
 	
 	def receive = {
+		case SendBagScanner(bs) =>
+			bagScanner = bs
+
+		case SendBodyScanner(bs) =>
+			bodyScanner = bs
+
 		case ToSecurityStation(passenger) =>
 			// TODO is there a way to find out who sent the message so we know if it is a bag or person?
+			// Also just a stub right now so I could test the program and get it to run.
 			println("Passenger " + passenger._1 + " arrived at Security Station.")
+
+		case ScannerClosed(id) =>
+			// When both scanners have sent the message, it can kill itself
+			// As each scanner sends the message, it replies with a poisonpill or stop call
+			println("Scanner closed")
 	}
 }
