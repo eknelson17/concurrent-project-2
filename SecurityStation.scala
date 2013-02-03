@@ -12,5 +12,9 @@ class SecurityStation(val line : Int) extends Actor {
 	val stationLine = line
 	var passengers = new MutableList();
 	
-
+	def receive = {
+		case ToSecurityStation(passenger) =>
+			// TODO is there a way to find out who sent the message so we know if it is a bag or person?
+			println("Passenger " + passenger._1 + " arrived at Security Station.")
+	}
 }

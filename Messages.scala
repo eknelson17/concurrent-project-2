@@ -1,3 +1,4 @@
+// Author: Emma Nelson
 import scala.collection.mutable.MutableList
 import akka.actor.ActorRef
 
@@ -13,15 +14,15 @@ case class GetPassenger(passenger : Int)
 // Immutable message sent to the queue with the passenger
 case class ToLine(passenger : Int)
 
-// Immutable message sent to the Queue to ask for a 
-case class NextBag
-
 // Immutable message sent to the Security Station with the passenger
 // and the 
-case class ToSecurityStation(passenger : (Int, Boolean))
+case class ToSecurityStation(passenger : Tuple2[Int, Boolean])
 
-// Immutable message sent to the Queue to ask for a 
-case class NextPassenger
+// Send a passenger to jail
+case class Prisoner(passenger : Int)
 
 // Tells the controller it is the end of a day
 case object EndDay
+
+// Close the jail by sending all the prisoners to permanent lockup
+case object CloseJail

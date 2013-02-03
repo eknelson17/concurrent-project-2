@@ -16,10 +16,8 @@ class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor
 			} else {
 				println("The bag belonging to Passenger " + bag + " has passed inspection.")
 			}
-			securityStation ! ToSecurityStation((bag, hasPassed))
+			securityStation ! ToSecurityStation(new Tuple2(bag : Int, hasPassed : Boolean))
 			println("The bag belonging to Passenger " + bag + " was sent to the Security Station.")
-
-			// TODO Request the next bag from the Queue
 
 		// TODO add close functionality
 	}

@@ -17,10 +17,8 @@ class BodyScanner(val nLines : Int, val securityStation : ActorRef) extends Acto
 			} else {
 				println("Passenger " + passenger + " has passed inspection.")
 			}
-			securityStation ! ToSecurityStation((passenger, hasPassed))
+			securityStation ! ToSecurityStation(new Tuple2(passenger : Int, hasPassed : Boolean))
 			println("Passenger " + passenger + " has been sent to the Security Station.")
-
-			// TODO request the next passenger from the Queue
 
 		// TODO add close functionality
 	}

@@ -31,7 +31,7 @@ class DocScanner(val numLines : Int) extends Actor {
 			}
 	}
 
-	override def poststop = {
+	override def postStop = {
 		for(i <- 0 to numLines-1) {
 			bodyScanners.get(i).head ! PoisonPill
 			bagScanners.get(i).head ! PoisonPill

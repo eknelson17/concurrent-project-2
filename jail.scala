@@ -8,15 +8,15 @@ import scala.collection.mutable.MutableList
 //At the end of the day, it receives a message to put its passengers
 //in permanent lockup, and purges all of its passengers.
 class Jail extends Actor {
-	var passengers = new MutableList()
+	var passengers = new MutableList[Int]()
 
 	def receive = {
 		case Prisoner(passenger) =>
-			passengers = passengers ++ passenger
+			passengers = passengers += passenger
 			println("Passenger " + passenger + 
 				" is sent to jail by a security station")
 
-		case Close =>
+		case CloseJail =>
 			while(!passengers.isEmpty) {
 				//While passengers are left, slice them out one at a time
 				//and print who we've removed

@@ -15,13 +15,10 @@ object TSA {
 	def main(arg: Array[String]) = {
 		// Setup time - currently set to run 24 hours in 1.44 minutes (I think)
 		val startTime = System.currentTimeMillis
-		val endTime = startTime + 86400
+		val endTime = startTime + 864
 
 		// Setup the Actor system
 		val system = ActorSystem("TSASystem")
-		
-		//val jail = system.actorOf(Props(new Jail()))
-		//println("The Jail has been started.")
 
 		// In order to do away with the queues, we will have to use scala routing
 		// to find out about messages. Might need it for the docScanner too. -Emma
@@ -33,20 +30,14 @@ object TSA {
 		// PoisonPill is enqueued as ordinary messages and will be handled 
 		// after messages that were already queued in the mailbox."
 
-		// Create and start the DocScanner
-		//val docScanner = system.actorOf(Props(new DocScanner(NLINES)))
-		//println("The DocScanner has been started.")
-
 		// Create and start the Controller
-		// TODO add other needed params
-		//val controller = system.actorOf(Props(new Controller(docScanner, jail)))
 		val controller = system.actorOf(Props(new Controller(system, NLINES)))
 		println("The Controller has been started.")
 
-		// Send passengers - 20% chance per millisecond
+		// Send passengers - 0.05% chance per millisecond
 		val random = new Random()
 		while (System.currentTimeMillis != endTime) {
-			if(random.nextInt(100) <= 20) {
+			if(random.nextInt(100) <= 0.05) {
 				controller ! SendPassengers
 				println("More passengers have arrived at the airport.")
 			}
