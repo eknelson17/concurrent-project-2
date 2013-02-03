@@ -71,5 +71,8 @@ object tsa {
 
 		// I think the Controller might have to construct the other actors in order
 		// for shut down to work, but I'm not sure yet. Looking into it. -Emma
+
+		// Maybe we could just pass it the system? Can't send messages to a non-actor
+		// so the main can't close the system. I'm gonna sleep on it...
 	}
 }
