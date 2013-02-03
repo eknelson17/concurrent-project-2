@@ -4,9 +4,6 @@ import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.util.Random
 
-// Immutable message sent to the Queue to ask for a 
-case class NextBag
-
 class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor {
 	var hasPassed = true
 	val random = new Random()
@@ -23,5 +20,7 @@ class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor
 			println("The bag belonging to Passenger " + bag + " was sent to the Security Station.")
 
 			// TODO Request the next bag from the Queue
+
+		// TODO add close functionality
 	}
 }
