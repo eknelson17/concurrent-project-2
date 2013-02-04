@@ -18,8 +18,10 @@ case class GetPassenger(passenger : Int)
 case class ToLine(passenger : Int)
 
 // Immutable message sent to the Security Station with the passenger
-// and the 
-case class ToSecurityStation(passenger : Tuple2[Int, Boolean])
+case class PersonToSecurityStation(passenger : Tuple2[Int, Boolean])
+
+// Immutable message sent to the Security Station with the bag
+case class BagToSecurityStation(bag : Tuple2[Int, Boolean])
 
 // Send a passenger to jail
 case class Prisoner(passenger : Int)

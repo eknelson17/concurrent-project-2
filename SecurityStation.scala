@@ -22,14 +22,23 @@ class SecurityStation(val line : Int) extends Actor {
 		case SendBodyScanner(bs) =>
 			bodyScanner = bs
 
-		case ToSecurityStation(passenger) =>
+		case BagToSecurityStation(bag) =>
+			// When the bag scanner sends a bag to the security station
+			println("Bag " + bag._1 + " arrived at Security Station.")
+			checkPassengerList(bag)
+
+		case PersonToSecurityStation(passenger) =>
 			// TODO is there a way to find out who sent the message so we know if it is a bag or person?
-			// Also just a stub right now so I could test the program and get it to run.
+			// Also just a stub right now so I could test the program and get it to run. 
 			println("Passenger " + passenger._1 + " arrived at Security Station.")
 
 		case ScannerClosed(id) =>
 			// When both scanners have sent the message, it can kill itself
 			// As each scanner sends the message, it replies with a poisonpill or stop call
 			println("Scanner closed")
+	}
+
+	def checkPassengerList(val passenger : Tuple2) = {
+
 	}
 }

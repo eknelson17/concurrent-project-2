@@ -21,7 +21,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 			} else {
 				println("Passenger " + passenger + " has passed inspection.")
 			}
-			securityStation ! ToSecurityStation(new Tuple2(passenger : Int, hasPassed : Boolean))
+			securityStation ! PersonToSecurityStation(new Tuple2(passenger : Int, hasPassed : Boolean))
 			println("Passenger " + passenger + " has been sent to the Security Station.")
 	}
 
