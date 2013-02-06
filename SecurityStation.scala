@@ -3,6 +3,8 @@
 import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.collection.mutable.MutableList
+import akka.actor.Props
+import akka.actor.ActorSystem
 
 //The security station processes passengers who move through the system.
 //It keeps track of bags and people sent through its line's scanners,
@@ -12,8 +14,9 @@ import scala.collection.mutable.MutableList
 class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 	val stationLine = line
 	var passengers = new MutableList[Tuple2[Int, Boolean]]();
-	var bagScanner = new ActorRef()
-	var bodyScanner = new Actor()
+	val system = ActorSystem("Test")
+	var bagScanner = system.actorOf(Props(new DefaultActor()))
+	var bodyScanner = system.actorOf(Props(new DefaultActor()))
 	
 	def receive = {
 		case SendBagScanner(bs) =>
@@ -27,7 +30,7 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 			println("Bag " + bag._1 + " arrived at Security Station.")
 			checkPassengerList(bag)
 
-		case PersonToSecurityStation(passenger) =>. 
+		case PersonToSecurityStation(passenger) =>
 			println("Passenger " + passenger._1 + " arrived at Security Station.")
 			checkPassengerList(passenger)
 
@@ -59,10 +62,9 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 				println("Passenger " + passenger._1 + " failed the security check and heads to jail.")
 				// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
 				// we do some slicing to make it work.
-				var tempList = new MutableList[Tuple2[Int, Boolean]]
-				tempList = passengers.slice(0,entryIndex)
-				tempList += passengers.slice(entryIndex+1, passengers.length)
-				passengers = tempList
+				val tempList = passengers.slice(0, entryIndex)
+				val tempList2 = passengers.slice(entryIndex+1, passengers.length)
+				passengers = tempList ++ tempList2
 				// Send the passenger to jail
 				jail ! Prisoner(passenger._1)
 			}
@@ -70,15 +72,14 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 				println("Passenger " + passenger._1 + " passed the security check and heads to a flight.")
 				// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
 				// we do some slicing to make it work.
-				var tempList = new MutableList[Tuple2[Int, Boolean]]
-				tempList = passengers.slice(0,entryIndex)
-				tempList += passengers.slice(entryIndex+1, passengers.length)
-				passengers = tempList
+				val tempList = passengers.slice(0, entryIndex)
+				val tempList2 = passengers.slice(entryIndex+1, passengers.length)
+				passengers = tempList ++ tempList2
 			}
 		}
 		// If we didn't find them in the list, add them to the list
 		else {
-			passengers.add(passenger)
+			passengers = passengers += passenger
 		}
 	}
 }
