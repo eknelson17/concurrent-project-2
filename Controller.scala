@@ -22,7 +22,7 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 	override def preStart = {
 		println("The DocScanner has been started.")
 
-		val jail = system.actorOf(Props(new Jail()))
+		val jail = system.actorOf(Props(new Jail(numLines)))
 		println("The Jail has been started.")
 
 		// Create all the security stations, bag scanners, and body scanners

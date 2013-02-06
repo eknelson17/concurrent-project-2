@@ -7,7 +7,7 @@ import scala.util.Random
 // Gets a bag from DocScanner Decides whether a passenger's bag passes or 
 // fails(20% chance they fail) the baggage scan and then relays this 
 // information to the SecurityStation. 
-class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor {
+class BagScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	var hasPassed = true
 	val random = new Random()
 
@@ -23,6 +23,7 @@ class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor
 				hasPassed = false
 				println("The bag belonging to Passenger " + bag + " has failed inspection.")
 			} else {
+				hasPassed = true
 				println("The bag belonging to Passenger " + bag + " has passed inspection.")
 			}
 			//sends a tuple with the Passenger and whether or not the bag passed the scan
@@ -31,6 +32,6 @@ class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor
 	}
 
 	override def postStop {
-		securityStation ! ScannerClosed
+		securityStation ! ScannerClosed(id)
 	}
 }

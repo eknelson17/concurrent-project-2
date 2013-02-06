@@ -15,7 +15,7 @@ object TSA {
 	def main(arg: Array[String]) = {
 		// Setup time
 		val startTime = System.currentTimeMillis
-		val endTime = startTime + 2000
+		val endTime = startTime + 1000
 
 		// Setup the Actor system
 		val system = ActorSystem("TSASystem")

@@ -29,8 +29,8 @@ case class Prisoner(passenger : Int)
 // Tells the controller it is the end of a day
 case object EndDay
 
-// Close the jail by sending all the prisoners to permanent lockup
-case object CloseJail
+// Tells the jail a line has closed
+case object LineClosed
 
 // Sent to Security Station to tell it one of the scanners has closed
 // Once the second message is received, then the Security Station can close

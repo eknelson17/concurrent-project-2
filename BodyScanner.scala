@@ -25,6 +25,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 				hasPassed = false
 				println("Passenger " + passenger + " has failed inspection.")
 			} else {
+				hasPassed = true
 				println("Passenger " + passenger + " has passed inspection.")
 			}
 			//sends a tuple with the Passenger and whether or not a person passed the scan

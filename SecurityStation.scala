@@ -5,6 +5,7 @@ import akka.actor.ActorRef
 import scala.collection.mutable.MutableList
 import akka.actor.Props
 import akka.actor.ActorSystem
+import akka.actor.PoisonPill
 
 //The security station processes passengers who move through the system.
 //It keeps track of bags and people sent through its line's scanners,
@@ -42,7 +43,9 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 			if(!oneClosed) {
 				oneClosed = true
 			} else {
-				//stop()
+				println("SecurityStation " + stationLine + " closed.")
+				jail ! LineClosed
+				self ! PoisonPill
 			}
 	}
 
