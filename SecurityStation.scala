@@ -3,6 +3,8 @@
 import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.collection.mutable.MutableList
+import akka.actor.ActorSystem
+import akka.actor.Props
 
 //The security station processes passengers who move through the system.
 //It keeps track of bags and people sent through its line's scanners,
@@ -11,9 +13,10 @@ import scala.collection.mutable.MutableList
 //associated scanners to close.
 class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 	val stationLine = line
+	val system = ActorSystem("Test")
 	var passengers = new MutableList[Tuple2[Int, Boolean]]();
-	var bagScanner = new ActorRef()
-	var bodyScanner = new Actor()
+	var bagScanner = system.actorOf(Props(new DefaultActor()))
+	var bodyScanner = system.actorOf(Props(new DefaultActor()))
 	
 	def receive = {
 		case SendBagScanner(bs) =>
@@ -74,7 +77,14 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 		}
 		// If we didn't find them in the list, add them to the list
 		else {
-			passengers.add(passenger)
+			passengers = passengers += passenger
 		}
+	}
+}
+
+class DefaultActor() extends Actor {
+	def receive = {
+		case EndDay =>
+			println("Illegal message sent.")
 	}
 }
