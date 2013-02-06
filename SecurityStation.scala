@@ -1,4 +1,4 @@
-//Author: Dan Lavoie
+// Author: Dan Lavoie
 // Editied by: Emma Nelson
 import akka.actor.Actor
 import akka.actor.ActorRef
@@ -27,9 +27,7 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 			println("Bag " + bag._1 + " arrived at Security Station.")
 			checkPassengerList(bag)
 
-		case PersonToSecurityStation(passenger) =>
-			// TODO is there a way to find out who sent the message so we know if it is a bag or person?
-			// Also just a stub right now so I could test the program and get it to run. 
+		case PersonToSecurityStation(passenger) =>. 
 			println("Passenger " + passenger._1 + " arrived at Security Station.")
 			checkPassengerList(passenger)
 
@@ -82,5 +80,14 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 		else {
 			passengers.add(passenger)
 		}
+	}
+}
+
+// An empty actor that holds the place for a real actor to be saved to a
+// variable later.
+class DefaultActor() extends Actor {
+	def receive = {
+		case EndDay =>
+			println("Illegal message sent.")
 	}
 }
