@@ -13,9 +13,9 @@ object TSA {
 	val NLINES = 5
 
 	def main(arg: Array[String]) = {
-		// Setup time - currently set to run 24 hours in 1.44 minutes (I think)
+		// Setup time
 		val startTime = System.currentTimeMillis
-		val endTime = startTime + 864
+		val endTime = startTime + 600
 
 		// Setup the Actor system
 		val system = ActorSystem("TSASystem")
@@ -34,10 +34,10 @@ object TSA {
 		val controller = system.actorOf(Props(new Controller(system, NLINES)))
 		println("The Controller has been started.")
 
-		// Send passengers - 0.05% chance per millisecond
+		// Send passengers
 		val random = new Random()
 		while (System.currentTimeMillis != endTime) {
-			if(random.nextInt(100) <= 0.05) {
+			if(random.nextInt(1000) <= 1) {
 				controller ! SendPassengers
 				println("More passengers have arrived at the airport.")
 			}

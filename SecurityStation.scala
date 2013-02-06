@@ -37,7 +37,7 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 		case ScannerClosed(id) =>
 			// When both scanners have sent the message, it can kill itself
 			// As each scanner sends the message, it replies with a poisonpill or stop call
-			println("Scanner closed")
+			println("Scanner " + id + " closed")
 	}
 
 	def checkPassengerList(passenger : Tuple2[Int, Boolean]) = {
