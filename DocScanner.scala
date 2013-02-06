@@ -15,11 +15,14 @@ class DocScanner(val numLines : Int) extends Actor {
 	var bagScanners = MutableList[ActorRef]()
 	
 	def receive = {
+		//receives references to all the bodyScanner and BagScanner when the program is initilizing
 		case SendScanners(bodyS, bagS) =>
 			bodyScanners = bodyS
 			bagScanners = bagS
 
+		//receives a passenger from controller
 		case GetPassenger(passenger) =>
+			//decides whether a passenger fails the document check
 			if(random.nextInt(100) > 20) {
 				bodyScanners.get(nextLine).head ! ToLine(passenger)
 				println("Passenger " + passenger + " is sent to wait for Body Scanner " + nextLine + " by the Doc Scanner.")
