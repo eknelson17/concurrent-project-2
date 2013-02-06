@@ -11,9 +11,9 @@ import scala.collection.mutable.MutableList
 //associated scanners to close.
 class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 	val stationLine = line
-	var passengers = new MutableList();
-	var bagScanner = null
-	var bodyScanner = null
+	var passengers = new MutableList[Tuple2[Int, Boolean]]();
+	var bagScanner = new ActorRef()
+	var bodyScanner = new Actor()
 	
 	def receive = {
 		case SendBagScanner(bs) =>
@@ -39,7 +39,7 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 			println("Scanner closed")
 	}
 
-	def checkPassengerList(val passenger : Tuple2) = {
+	def checkPassengerList(passenger : Tuple2[Int, Boolean]) = {
 		// Check if the passenger or bag has already been partially processed.
 		// To do this, iterate through the list. If there is a tuple with the same first int,
 		// then an entry exists. Otherwise, it does not.
@@ -47,8 +47,8 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 		//Create the boolean to check if an entry is found
 		var entryFound = false
 		var entryIndex = -1
-		for (i <- 0 to passengers.length()) {
-			if(passengers.get(i)._1 == passenger._1) {
+		for (i <- 0 to passengers.length) {
+			if(passengers.get(i).head._1 == passenger._1) {
 				entryFound = true
 				entryIndex = i
 			}
@@ -56,20 +56,20 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 		// If we found the passenger in the list, finish processing them
 		if (entryFound) {
 			// Check if one of the entries didn't pass the security scan
-			if(passengers.get(entryIndex)._2 == false || passenger._2 == false) {
+			if(passengers.get(entryIndex).head._2 == false || passenger._2 == false) {
 				// Something didn't pass. To Jail!
 				println("Passenger " + passenger._1 + " failed the security check and heads to jail.")
 				// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
 				// we use the filterNot function to build a list of only elements not including passenger.
-				passengers = passengers.filterNot(_._1 == passenger._1)
+				passengers = passengers.filterNot(passenger._1)
 				// Send the passenger to jail
-				jail ! Prisoner(passenger)
+				jail ! Prisoner(passenger._1)
 			}
 			else {
 				println("Passenger " + passenger._1 + " passed the security check and heads to a flight.")
 				// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
 				// we use the filterNot function to build a list of only elements not including passenger.
-				passengers = passengers.filterNot(_._1 == passenger._1)
+				passengers = passengers.filterNot(_.head._1 == passenger._1)
 			}
 		}
 		// If we didn't find them in the list, add them to the list
