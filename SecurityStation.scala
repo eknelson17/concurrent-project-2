@@ -44,40 +44,44 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 		// Check if the passenger or bag has already been partially processed.
 		// To do this, iterate through the list. If there is a tuple with the same first int,
 		// then an entry exists. Otherwise, it does not.
-
-		//Create the boolean to check if an entry is found
-		var entryFound = false
-		var entryIndex = -1
-		for (i <- 0 to passengers.length) {
-			if(passengers.get(i).head._1 == passenger._1) {
-				entryFound = true
-				entryIndex = i
+		if (passengers.length > 0) {
+			//Create the boolean to check if an entry is found
+			var entryFound = false
+			var entryIndex = -1
+			for (i <- 0 to passengers.length) {
+				if(passengers.get(i).head._1 == passenger._1) {
+					entryFound = true
+					entryIndex = i
+				}
 			}
-		}
-		// If we found the passenger in the list, finish processing them
-		if (entryFound) {
-			// Check if one of the entries didn't pass the security scan
-			if(passengers.get(entryIndex).head._2 == false || passenger._2 == false) {
-				// Something didn't pass. To Jail!
-				println("Passenger " + passenger._1 + " failed the security check and heads to jail.")
-				// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
-				// we do some slicing to make it work.
-				val tempList = passengers.slice(0, entryIndex)
-				val tempList2 = passengers.slice(entryIndex+1, passengers.length)
-				passengers = tempList ++ tempList2
-				// Send the passenger to jail
-				jail ! Prisoner(passenger._1)
+			// If we found the passenger in the list, finish processing them
+			if (entryFound) {
+				// Check if one of the entries didn't pass the security scan
+				if(passengers.get(entryIndex).head._2 == false || passenger._2 == false) {
+					// Something didn't pass. To Jail!
+					println("Passenger " + passenger._1 + " failed the security check and heads to jail.")
+					// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
+					// we do some slicing to make it work.
+					val tempList = passengers.slice(0, entryIndex)
+					val tempList2 = passengers.slice(entryIndex+1, passengers.length)
+					passengers = tempList ++ tempList2
+					// Send the passenger to jail
+					jail ! Prisoner(passenger._1)
+				}
+				else {
+					println("Passenger " + passenger._1 + " passed the security check and heads to a flight.")
+					// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
+					// we do some slicing to make it work.
+					val tempList = passengers.slice(0, entryIndex)
+					val tempList2 = passengers.slice(entryIndex+1, passengers.length)
+					passengers = tempList ++ tempList2
+				}
 			}
+			// If we didn't find them in the list, add them to the list
 			else {
-				println("Passenger " + passenger._1 + " passed the security check and heads to a flight.")
-				// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
-				// we do some slicing to make it work.
-				val tempList = passengers.slice(0, entryIndex)
-				val tempList2 = passengers.slice(entryIndex+1, passengers.length)
-				passengers = tempList ++ tempList2
+				passengers = passengers += passenger
 			}
 		}
-		// If we didn't find them in the list, add them to the list
 		else {
 			passengers = passengers += passenger
 		}
