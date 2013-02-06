@@ -14,8 +14,8 @@ class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor
 		securityStation ! SendBagScanner(self)
 	}
 
-	//recieves a bag from DocScanner to scan
 	def receive = {	
+		//recieves a bag from DocScanner to scan
 		case GetPassenger(bag) =>
 			//decides whether the bag fails or passes the scan
 			if(random.nextInt(5) == 1) {

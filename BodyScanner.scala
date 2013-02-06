@@ -15,8 +15,8 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 		securityStation ! SendBodyScanner(self)
 	}
 
-	//recieves a passenger from DocScanner to scan
 	def receive = {	
+		//recieves a passenger from DocScanner to scan
 		case GetPassenger(passenger) =>
 			//decides whether the passenger fails or passes the scan
 			if(random.nextInt(5) == 1) {
