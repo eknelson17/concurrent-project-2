@@ -14,6 +14,7 @@ import akka.actor.PoisonPill
 class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 	val random = new Random()
 	var passNum = 1
+	var jail = system.actorOf(Props(new DefaultActor()))
 	var securityStations = MutableList[ActorRef]()	
 	var bodyScanners = MutableList[ActorRef]()
 	var bagScanners = MutableList[ActorRef]()
@@ -22,7 +23,7 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 	override def preStart = {
 		println("The DocScanner has been started.")
 
-		val jail = system.actorOf(Props(new Jail(numLines)))
+		jail = system.actorOf(Props(new Jail(numLines, self)))
 		println("The Jail has been started.")
 
 		// Create all the security stations, bag scanners, and body scanners
@@ -55,9 +56,14 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 				passNum = 1 + passNum
 			}
 
-		// TODO
 		case EndDay =>
 			docScanner ! PoisonPill
-			// Insert remaining calls to close everything
+
+		case JailClosed =>
+			jail ! PoisonPill
+			self ! PoisonPill
+			println("System is shutting down.")
+			system.shutdown()
+			System.exit(0)
 	}
 }

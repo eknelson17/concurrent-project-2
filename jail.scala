@@ -7,7 +7,7 @@ import scala.collection.mutable.MutableList
 //The Jail keeps a list of immutable passenger objects it is sent.
 //At the end of the day, it receives a message to put its passengers
 //in permanent lockup, and purges all of its passengers.
-class Jail(val numLines : Int) extends Actor {
+class Jail(val numLines : Int, val controller : ActorRef) extends Actor {
 	var passengers = new MutableList[Int]()
 	var numClosedLines = 0
 
@@ -30,7 +30,7 @@ class Jail(val numLines : Int) extends Actor {
 					passengers = passengers.slice(1, passengers.length)
 				}
 				println("All passengers in permanent lockup. Jail is closing for the day.")
-				println(size)
+				controller ! JailClosed
 			}
 	}
 }

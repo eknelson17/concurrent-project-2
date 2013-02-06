@@ -35,3 +35,6 @@ case object LineClosed
 // Sent to Security Station to tell it one of the scanners has closed
 // Once the second message is received, then the Security Station can close
 case class ScannerClosed(id : Int)
+
+// Tells the controller that the jail has closed
+case object JailClosed
