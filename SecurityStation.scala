@@ -3,8 +3,6 @@
 import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.collection.mutable.MutableList
-import akka.actor.ActorSystem
-import akka.actor.Props
 
 //The security station processes passengers who move through the system.
 //It keeps track of bags and people sent through its line's scanners,
@@ -13,10 +11,9 @@ import akka.actor.Props
 //associated scanners to close.
 class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 	val stationLine = line
-	val system = ActorSystem("Test")
 	var passengers = new MutableList[Tuple2[Int, Boolean]]();
-	var bagScanner = system.actorOf(Props(new DefaultActor()))
-	var bodyScanner = system.actorOf(Props(new DefaultActor()))
+	var bagScanner = new ActorRef()
+	var bodyScanner = new Actor()
 	
 	def receive = {
 		case SendBagScanner(bs) =>
@@ -63,28 +60,27 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 				// Something didn't pass. To Jail!
 				println("Passenger " + passenger._1 + " failed the security check and heads to jail.")
 				// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
-				// we use the filterNot function to build a list of only elements not including passenger.
-				passengers = passengers.filterNot(passenger._1)
+				// we do some slicing to make it work.
+				var tempList = new MutableList[Tuple2[Int, Boolean]]
+				tempList = passengers.slice(0,entryIndex)
+				tempList += passengers.slice(entryIndex+1, passengers.length)
+				passengers = tempList
 				// Send the passenger to jail
 				jail ! Prisoner(passenger._1)
 			}
 			else {
 				println("Passenger " + passenger._1 + " passed the security check and heads to a flight.")
 				// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
-				// we use the filterNot function to build a list of only elements not including passenger.
-				passengers = passengers.filterNot(_.head._1 == passenger._1)
+				// we do some slicing to make it work.
+				var tempList = new MutableList[Tuple2[Int, Boolean]]
+				tempList = passengers.slice(0,entryIndex)
+				tempList += passengers.slice(entryIndex+1, passengers.length)
+				passengers = tempList
 			}
 		}
 		// If we didn't find them in the list, add them to the list
 		else {
-			passengers = passengers += passenger
+			passengers.add(passenger)
 		}
-	}
-}
-
-class DefaultActor() extends Actor {
-	def receive = {
-		case EndDay =>
-			println("Illegal message sent.")
 	}
 }
