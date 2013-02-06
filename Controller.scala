@@ -29,7 +29,7 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 		// and add them to the appropriate list to be sent to the DocScanner
 		for(i <- 1 to numLines) {
 			// Passed i so it knows what number it is
-			val securityStation = system.actorOf(Props(new SecurityStation(i)))
+			val securityStation = system.actorOf(Props(new SecurityStation(i, jail)))
 			println("Security Station " + i + " has been started.")
 			securityStations = securityStations += securityStation
 
