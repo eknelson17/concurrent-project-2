@@ -33,12 +33,12 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 			println("Security Station " + i + " has been started.")
 			securityStations = securityStations += securityStation
 
-			//initialize BodyScanners
+			//initialize the BodyScanner and adds it to the list of BodyScanners
 			val bodyScanner = system.actorOf(Props(new BodyScanner(i, securityStation)))
 			println("Body Scanner " + i + " has been started.")
 			bodyScanners = bodyScanners += bodyScanner
 			
-			//initialize BagScanner
+			//initialize the BagScanner and adds it to the list of BagScanners
 			val bagScanner = system.actorOf(Props(new BagScanner(i, securityStation)))
 			println("Bag Scanners " + i + " has been started.")
 			bagScanners = bagScanners += bagScanner
