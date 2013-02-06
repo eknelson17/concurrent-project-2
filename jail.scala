@@ -1,5 +1,5 @@
 // Author: Dan Lavoie
-// Edited by: Emma Nelson
+// Edited by: Emma Nelson, Maddison Hickson
 import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.collection.mutable.MutableList

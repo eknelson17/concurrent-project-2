@@ -1,4 +1,5 @@
 // Author: Emma Nelsons
+// Edited by: Maddison Hickson
 import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.util.Random

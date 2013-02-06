@@ -1,4 +1,5 @@
 // Author: Emma Nelson
+// Edited by: Maddison Hickson
 import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.util.Random
@@ -9,7 +10,7 @@ import akka.actor.PoisonPill
 
 // Creates and sends passengers into the system when the main tells 
 // it to. Closes everything else as possible.
-//class Controller(val docScanner : ActorRef, val jail : ActorRef) extends Actor {
+// class Controller(val docScanner : ActorRef, val jail : ActorRef) extends Actor {
 class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 	val random = new Random()
 	var passNum = 1
@@ -32,10 +33,12 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 			println("Security Station " + i + " has been started.")
 			securityStations = securityStations += securityStation
 
+			//initialize BodyScanners
 			val bodyScanner = system.actorOf(Props(new BodyScanner(i, securityStation)))
 			println("Body Scanner " + i + " has been started.")
 			bodyScanners = bodyScanners += bodyScanner
-
+			
+			//initialize BagScanner
 			val bagScanner = system.actorOf(Props(new BagScanner(i, securityStation)))
 			println("Bag Scanners " + i + " has been started.")
 			bagScanners = bagScanners += bagScanner
