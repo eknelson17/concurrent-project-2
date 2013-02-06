@@ -11,6 +11,7 @@ class Jail extends Actor {
 	var passengers = new MutableList[Int]()
 
 	def receive = {
+		//receives passenger from the SecurityStation to put in jail
 		case Prisoner(passenger) =>
 			passengers = passengers += passenger
 			println("Passenger " + passenger + 
