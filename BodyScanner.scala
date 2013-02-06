@@ -12,6 +12,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	var hasPassed = true
 	val random = new Random()
 	
+	//initializes by sending a reference of itself to securityStation
 	override def preStart = {
 		securityStation ! SendBodyScanner(self)
 	}
@@ -31,6 +32,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 			println("Passenger " + passenger + " has been sent to the Security Station.")
 	}
 
+	//before finishing it tells the securityStation it has closed
 	override def postStop {
 		securityStation ! ScannerClosed(id)
 	}
