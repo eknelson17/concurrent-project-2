@@ -15,7 +15,7 @@ object TSA {
 	def main(arg: Array[String]) = {
 		// Setup time
 		val startTime = System.currentTimeMillis
-		val endTime = startTime + 600
+		val endTime = startTime + 2000
 
 		// Setup the Actor system
 		val system = ActorSystem("TSASystem")
@@ -36,7 +36,7 @@ object TSA {
 
 		// Send passengers
 		val random = new Random()
-		while (System.currentTimeMillis != endTime) {
+		while (System.currentTimeMillis <= endTime) {
 			if(random.nextInt(1000) <= 1) {
 				controller ! SendPassengers
 				println("More passengers have arrived at the airport.")

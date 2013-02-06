@@ -17,6 +17,7 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 	val system = ActorSystem("Test")
 	var bagScanner = system.actorOf(Props(new DefaultActor()))
 	var bodyScanner = system.actorOf(Props(new DefaultActor()))
+	var oneClosed = false
 	
 	def receive = {
 		case SendBagScanner(bs) =>
@@ -38,6 +39,11 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 			// When both scanners have sent the message, it can kill itself
 			// As each scanner sends the message, it replies with a poisonpill or stop call
 			println("Scanner " + id + " closed")
+			if(!oneClosed) {
+				oneClosed = true
+			} else {
+				//stop()
+			}
 	}
 
 	def checkPassengerList(passenger : Tuple2[Int, Boolean]) = {
@@ -48,7 +54,7 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 			//Create the boolean to check if an entry is found
 			var entryFound = false
 			var entryIndex = -1
-			for (i <- 0 to passengers.length) {
+			for (i <- 0 to passengers.length-1) {
 				if(passengers.get(i).head._1 == passenger._1) {
 					entryFound = true
 					entryIndex = i
@@ -67,8 +73,7 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 					passengers = tempList ++ tempList2
 					// Send the passenger to jail
 					jail ! Prisoner(passenger._1)
-				}
-				else {
+				} else {
 					println("Passenger " + passenger._1 + " passed the security check and heads to a flight.")
 					// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
 					// we do some slicing to make it work.
@@ -76,13 +81,11 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 					val tempList2 = passengers.slice(entryIndex+1, passengers.length)
 					passengers = tempList ++ tempList2
 				}
-			}
-			// If we didn't find them in the list, add them to the list
-			else {
+			} else {
+				// If we didn't find them in the list, add them to the list
 				passengers = passengers += passenger
 			}
-		}
-		else {
+		} else {
 			passengers = passengers += passenger
 		}
 	}
