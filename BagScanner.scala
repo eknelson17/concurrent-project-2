@@ -4,8 +4,9 @@ import akka.actor.Actor
 import akka.actor.ActorRef
 import scala.util.Random
 
-// Decides whether a passenger's bag passes or fails(20% chance they fail) 
-// the baggage scan and then relays this information to the SecurityStation. 
+// Gets a bag from DocScanner Decides whether a passenger's bag passes or 
+// fails(20% chance they fail) the baggage scan and then relays this 
+// information to the SecurityStation. 
 class BagScanner(val nLines : Int, val securityStation : ActorRef) extends Actor {
 	var hasPassed = true
 	val random = new Random()

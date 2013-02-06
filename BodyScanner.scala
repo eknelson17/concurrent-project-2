@@ -5,8 +5,9 @@ import akka.actor.ActorRef
 import scala.util.Random
 import scala.collection.mutable.MutableList
 
-// Decides whether a passenger passes or fails(20% chance they fail) 
-// the body scan and then sends this information to the SecurityStation.
+// Gets a passenger from DoScanner and decides whether a passenger passes 
+// or fails(20% chance they fail) the body scan and then sends this 
+// information to the SecurityStation.
 class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	var hasPassed = true
 	val random = new Random()
@@ -16,7 +17,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	}
 
 	def receive = {	
-		//recieves a passenger from DocScanner to scan
+		//receives a passenger from DocScanner to scan
 		case GetPassenger(passenger) =>
 			//decides whether the passenger fails or passes the scan
 			if(random.nextInt(5) == 1) {
