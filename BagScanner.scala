@@ -34,7 +34,7 @@ class BagScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	}
 
 	override def postStop {
-		printLn("Bagscanner " + id + " tells securityStation " + id + " that it's closed.")
+		println("Bagscanner " + id + " tells securityStation " + id + " that it's closed.")
 		securityStation ! ScannerClosed(id)
 	}
 }
