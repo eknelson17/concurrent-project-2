@@ -32,7 +32,7 @@ class BagScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 			securityStation ! BagToSecurityStation(new Tuple2(bag : Int, hasPassed : Boolean))
 			println("The bag belonging to Passenger " + bag + " was sent to the Security Station by the BagScanner.")
 	}
-
+}
 	override def postStop {
 		securityStation ! ScannerClosed(id)
 	}

@@ -40,7 +40,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	override def postStop {
 		securityStation ! ScannerClosed(id)
 	}
-
+}
 // Author: Maddison Hickson
 // Edited by: Emma Nelson
 import akka.actor.Actor

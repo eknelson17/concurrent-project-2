@@ -45,6 +45,7 @@ class DocScanner(val numLines : Int) extends Actor {
 			bagScanners.get(i).head ! PoisonPill
 		}
 	}
+}
 // Author: Emma Nelsons
 // Edited by: Maddison Hickson
 import akka.actor.Actor
