@@ -1,7 +1,7 @@
 concurrent-project-2
 ====================
 
-TSA simulation project for our concurrent class.
+Maddison Hickson, Dan Lavoie, and Emma Nelson
 
 To compile the program, open a Terminal window or other shell with Scala installed and type "scalac *.scala". To run the program, type "TSA" and the simulation will execute on its own without any user input required. The program can also be run by run.bat on Windows. The batch file is configured to run on the lab machines for the course, so you may have to edit the CLASSPATH variables to work for your set up. Please note that the script included was provided by the professor, so any errors are not of our making.
 

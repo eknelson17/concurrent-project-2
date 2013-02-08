@@ -11,11 +11,12 @@ import scala.util.Random
 // tells the controller to close everything
 object TSA {
 	val NLINES = 5
+	val LENGTH = 1000
 
 	def main(arg: Array[String]) = {
 		// Setup time
 		val startTime = System.currentTimeMillis
-		val endTime = startTime + 1000
+		val endTime = startTime + LENGTH
 
 		// Setup the Actor system
 		val system = ActorSystem("TSASystem")
