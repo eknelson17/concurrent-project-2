@@ -59,9 +59,12 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 
 		case EndDay =>
 			docScanner ! PoisonPill
+			printLn("Controller tells DocScanner to close.")
 
 		case JailClosed =>
+			printLn("Controller tells Jail to close.")
 			jail ! PoisonPill
+			printLn("Controller tells itself to close.")
 			self ! PoisonPill
 			println("System is shutting down.")
 			system.shutdown()

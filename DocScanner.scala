@@ -40,9 +40,11 @@ class DocScanner(val numLines : Int) extends Actor {
 	}
 
 	override def postStop = {
+		printLn("DocScanner tells all BodyScanners and BagScanners to close.")
 		for(i <- 0 to numLines-1) {
 			bodyScanners.get(i).head ! PoisonPill
 			bagScanners.get(i).head ! PoisonPill
 		}
+		printLn("DocScanner closed.")
 	}
 }

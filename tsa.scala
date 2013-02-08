@@ -28,6 +28,7 @@ object TSA {
 		val random = new Random()
 		while (System.currentTimeMillis <= endTime) {
 			if(random.nextInt(30) <= 1) {
+				println("tsa sends a message to Controller to tell Controller to make passengers")
 				controller ! SendPassengers
 				println("More passengers have arrived at the airport.")
 			}

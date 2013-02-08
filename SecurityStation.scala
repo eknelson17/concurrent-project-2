@@ -43,8 +43,9 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 			if(!oneClosed) {
 				oneClosed = true
 			} else {
-				println("SecurityStation " + stationLine + " closed.")
 				jail ! LineClosed
+				println("SecurityStation " + stationLine + " tells the Jail that " + stationLine + " line has closed.")
+				println("SecurityStation " + stationLine + " closed.")
 				self ! PoisonPill
 			}
 	}

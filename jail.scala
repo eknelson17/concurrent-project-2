@@ -35,6 +35,7 @@ class Jail(val numLines : Int, val controller : ActorRef) extends Actor {
 				}
 				println("All passengers in permanent lockup. Jail is closing for the day.")
 				controller ! JailClosed
+				print("Jail tells the controller it has closed.")
 			}
 	}
 }

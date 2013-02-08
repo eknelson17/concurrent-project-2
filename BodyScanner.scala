@@ -38,6 +38,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 
 	//before finishing it tells the securityStation it has closed
 	override def postStop {
+		printLn("Bodyscanner " + id + " tells securityStation " + id + " that it's closed.")
 		securityStation ! ScannerClosed(id)
 	}
 }
