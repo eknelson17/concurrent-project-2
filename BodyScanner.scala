@@ -21,6 +21,9 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 		//receives a passenger from DocScanner to scan
 		case ToLine(passenger) =>
 			//decides whether the passenger fails or passes the scan
+
+			// First, take some time to simulate scanning the person
+			Thread.sleep(50)
 			if(random.nextInt(5) == 1) {
 				hasPassed = false
 				println("Passenger " + passenger + " has failed inspection.")

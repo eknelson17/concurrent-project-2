@@ -19,6 +19,9 @@ class BagScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 		//recieves a bag from DocScanner to scan
 		case ToLine(bag) =>
 			//decides whether the bag fails or passes the scan
+
+			// First, take some time to simulate scanning the bag
+			Thread.sleep(50)
 			if(random.nextInt(5) == 1) {
 				hasPassed = false
 				println("The bag belonging to Passenger " + bag + " has failed inspection.")

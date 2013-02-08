@@ -53,6 +53,9 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 		// Check if the passenger or bag has already been partially processed.
 		// To do this, iterate through the list. If there is a tuple with the same first int,
 		// then an entry exists. Otherwise, it does not.
+
+		// Take some time to simulate inspecting the passenger
+		Thread.sleep(50)
 		if (passengers.length > 0) {
 			//Create the boolean to check if an entry is found
 			var entryFound = false

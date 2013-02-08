@@ -30,6 +30,8 @@ class Jail(val numLines : Int, val controller : ActorRef) extends Actor {
 					println("Passenger " + passengers.head + 
 						" is being sent to permanent lockup.")
 					passengers = passengers.slice(1, passengers.length)
+					// Take some time to represent sending the passenger out of jail
+					Thread.sleep(50)
 				}
 				println("All passengers in permanent lockup. Jail is closing for the day.")
 				controller ! JailClosed

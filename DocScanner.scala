@@ -24,6 +24,8 @@ class DocScanner(val numLines : Int) extends Actor {
 		//receives a passenger from controller
 		case GetPassenger(passenger) =>
 			//decides whether a passenger fails the document check
+			// First, sleep to scan the passenger's documents
+			Thread.sleep(50)
 			if(random.nextInt(100) > 20) {
 				//sends the passenger to a body scanner
 				bodyScanners.get(nextLine).head ! ToLine(passenger)
