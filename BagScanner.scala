@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Author: Maddison Hickson
 // Edited By: Emma Nelson
 import akka.actor.Actor
@@ -19,10 +18,9 @@ class BagScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	def receive = {	
 		//recieves a bag from DocScanner to scan
 		case ToLine(bag) =>
-			//decides whether the bag fails or passes the scan
-
 			// First, take some time to simulate scanning the bag
-			Thread.sleep(50)
+			Thread.sleep(random.nextInt(5) + 1);
+			//decides whether the bag fails or passes the scan
 			if(random.nextInt(5) == 1) {
 				hasPassed = false
 				println("The bag belonging to Passenger " + bag + " has failed inspection.")
@@ -38,7 +36,6 @@ class BagScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	override def postStop {
 		securityStation ! ScannerClosed(id)
 	}
-=======
 // Author: Maddison Hickson
 // Edited By: Emma Nelson
 import akka.actor.Actor
@@ -75,5 +72,4 @@ class BagScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	override def postStop {
 		securityStation ! ScannerClosed(id)
 	}
->>>>>>> added time delay
 }

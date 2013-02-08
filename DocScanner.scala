@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Author: Emma Nelsons
 // Edited by: Maddison Hickson
 import akka.actor.Actor
@@ -26,7 +25,7 @@ class DocScanner(val numLines : Int) extends Actor {
 		case GetPassenger(passenger) =>
 			//decides whether a passenger fails the document check
 			// First, sleep to scan the passenger's documents
-			Thread.sleep(50)
+			Thread.sleep(random.nextInt(5) + 1);
 			if(random.nextInt(100) > 20) {
 				//sends the passenger to a body scanner
 				bodyScanners.get(nextLine).head ! ToLine(passenger)
@@ -46,7 +45,6 @@ class DocScanner(val numLines : Int) extends Actor {
 			bagScanners.get(i).head ! PoisonPill
 		}
 	}
-=======
 // Author: Emma Nelsons
 // Edited by: Maddison Hickson
 import akka.actor.Actor
@@ -92,5 +90,4 @@ class DocScanner(val numLines : Int) extends Actor {
 			bagScanners.get(i).head ! PoisonPill
 		}
 	}
->>>>>>> added time delay
 }

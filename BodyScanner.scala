@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // Author: Maddison Hickson
 // Edited by: Emma Nelson
 import akka.actor.Actor
@@ -24,7 +23,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 			//decides whether the passenger fails or passes the scan
 
 			// First, take some time to simulate scanning the person
-			Thread.sleep(50)
+			Thread.sleep(random.nextInt(5) + 1);
 			if(random.nextInt(5) == 1) {
 				hasPassed = false
 				println("Passenger " + passenger + " has failed inspection.")
@@ -41,7 +40,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	override def postStop {
 		securityStation ! ScannerClosed(id)
 	}
-=======
+
 // Author: Maddison Hickson
 // Edited by: Emma Nelson
 import akka.actor.Actor
@@ -81,5 +80,4 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 	override def postStop {
 		securityStation ! ScannerClosed(id)
 	}
->>>>>>> added time delay
 }
