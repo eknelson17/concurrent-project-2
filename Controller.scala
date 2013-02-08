@@ -52,8 +52,8 @@ class Controller(val system : ActorSystem, val numLines : Int) extends Actor {
 		case SendPassengers =>
 			var numPass = random.nextInt(10)
 			for(i <- 1 to numPass) {
-				println("Controller sends Passenger " + passNum + " in GetPassenger message to DocScanner")
 				docScanner ! GetPassenger(passNum)
+				println("Passenger " + passNum + " is sent to wait for the Doc Scanner by the Controller.")
 				passNum = 1 + passNum
 			}
 

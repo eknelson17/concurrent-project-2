@@ -30,7 +30,7 @@ class BodyScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 			}
 			//sends a tuple with the Passenger and whether or not a person passed the scan
 			securityStation ! PersonToSecurityStation(new Tuple2(passenger : Int, hasPassed : Boolean))
-			println("Passenger " + passenger + " has been sent to the Security Station.")
+			println("Passenger " + passenger + " has been sent to the Security Station by the BodyScanner.")
 	}
 
 	//before finishing it tells the securityStation it has closed

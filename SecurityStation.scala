@@ -68,7 +68,7 @@ class SecurityStation(val line : Int, val jail : ActorRef) extends Actor {
 				// Check if one of the entries didn't pass the security scan
 				if(passengers.get(entryIndex).head._2 == false || passenger._2 == false) {
 					// Something didn't pass. To Jail!
-					println("Passenger " + passenger._1 + " failed the security check and heads to jail.")
+					println("Passenger " + passenger._1 + " failed the security check and heads to jail by the Security Station.")
 					// We need to remove the entry in the list. Since MutableList can't "remove()" an item,
 					// we do some slicing to make it work.
 					val tempList = passengers.slice(0, entryIndex)

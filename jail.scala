@@ -14,9 +14,11 @@ class Jail(val numLines : Int, val controller : ActorRef) extends Actor {
 	def receive = {
 		//receives passenger from the SecurityStation to put in jail
 		case Prisoner(passenger) =>
+			println("Passenger " + passenger + 
+				" is recieved by the jail")
 			passengers = passengers += passenger
 			println("Passenger " + passenger + 
-				" is sent to jail by a security station")
+				" is put in jail.")
 
 		case LineClosed =>
 			numClosedLines = numClosedLines + 1

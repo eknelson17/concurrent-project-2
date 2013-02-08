@@ -28,7 +28,7 @@ class BagScanner(val id : Int, val securityStation : ActorRef) extends Actor {
 			}
 			//sends a tuple with the Passenger and whether or not the bag passed the scan
 			securityStation ! BagToSecurityStation(new Tuple2(bag : Int, hasPassed : Boolean))
-			println("The bag belonging to Passenger " + bag + " was sent to the Security Station.")
+			println("The bag belonging to Passenger " + bag + " was sent to the Security Station by the BagScanner.")
 	}
 
 	override def postStop {
