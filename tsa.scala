@@ -27,10 +27,11 @@ object TSA {
 		// Send passengers
 		val random = new Random()
 		while (System.currentTimeMillis <= endTime) {
-			if(random.nextInt(1000) <= 1) {
+			if(random.nextInt(30) <= 1) {
 				controller ! SendPassengers
 				println("More passengers have arrived at the airport.")
 			}
+			Thread.sleep(10);
 		}
 
 		controller ! EndDay
