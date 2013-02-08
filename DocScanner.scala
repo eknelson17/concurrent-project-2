@@ -74,7 +74,6 @@ class DocScanner(val numLines : Int) extends Actor {
 		case GetPassenger(passenger) =>
 			//decides whether a passenger fails the document check
 			if(random.nextInt(100) > 20) {
-				Thread.sleep(random.nextInt(5));
 				//sends the passenger to a body scanner
 				bodyScanners.get(nextLine).head ! ToLine(passenger)
 				println("Passenger " + passenger + " is sent to wait for Body Scanner " + nextLine + " by the Doc Scanner.")
