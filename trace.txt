@@ -1,0 +1,122 @@
+(Annotations in parentheses)
+
+The Controller has been started.
+TSA sends a message to Controller to tell Controller to make passengers
+More passengers have arrived at the airport.
+The DocScanner has been started.
+The Jail has been started.
+Security Station 1 has been started.
+Body Scanner 1 has been started.
+Bag Scanners 1 has been started.
+Security Station 2 has been started.
+Body Scanner 2 has been started.
+Bag Scanners 2 has been started.
+Security Station 3 has been started.
+Body Scanner 3 has been started.
+Bag Scanners 3 has been started.
+Security Station 4 has been started.
+Body Scanner 4 has been started.
+Bag Scanners 4 has been started.
+Security Station 5 has been started.
+Body Scanner 5 has been started.
+Bag Scanners 5 has been started.
+
+(up to five different lines are created with a bag scanner, body scanner, 
+and security station. One document scanner and one Jail are also created)
+
+Passenger 1 is sent to wait for the Doc Scanner by the Controller.
+Passenger 2 is sent to wait for the Doc Scanner by the Controller.
+Passenger 3 is sent to wait for the Doc Scanner by the Controller.
+Passenger 4 is sent to wait for the Doc Scanner by the Controller.
+Passenger 5 is sent to wait for the Doc Scanner by the Controller.
+Passenger 6 is sent to wait for the Doc Scanner by the Controller.
+Passenger 7 is sent to wait for the Doc Scanner by the Controller.
+
+(Passengers are created and sent to the doc scanner to be evaluated)
+
+Passenger 1 has invalid documentation.  (You can see that a passenger can fail a document scan)
+Passenger 2 is sent to wait for Body Scanner 0 by the Doc Scanner. 
+(You can see a passenger can also pass a document scanner and is sent to the first line’s body scanner)
+Passenger 2 has passed inspection. (A passenger passes the body scanner)
+Passenger 2 has been sent to the Security Station by the BodyScanner.
+(The body scanner then sends the passenger to the Security Station when it is scanned)
+
+Passenger 2's bag is sent to wait for Bag Scanner 0 by the Doc Scanner.
+(You can see a passenger’s bag is also sent to a body scanner of the same line that the passenger was sent to)
+
+Passenger 3 is sent to wait for Body Scanner 1 by the Doc Scanner. (The next passenger is sent to the next line)
+The bag belonging to Passenger 2 has passed inspection.(Bags can pass inspection at the bag scanner)
+Passenger 3's bag is sent to wait for Bag Scanner 1 by the Doc Scanner.
+Passenger 3 has passed inspection.
+Passenger 4 is sent to wait for Body Scanner 2 by the Doc Scanner.
+Passenger 4's bag is sent to wait for Bag Scanner 2 by the Doc Scanner.
+The bag belonging to Passenger 3 has passed inspection.
+Passenger 3 has been sent to the Security Station by the BodyScanner.
+Passenger 4 has passed inspection.
+Passenger 4 has been sent to the Security Station by the BodyScanner.
+Passenger 5 has invalid documentation.
+Passenger 4 arrived at Security Station.
+The bag belonging to Passenger 3 was sent to the Security Station by the BagScanner.(bags are then sent to the security station)
+Passenger 3 arrived at Security Station.
+Passenger 2 arrived at Security Station.
+The bag belonging to Passenger 2 was sent to the Security Station by the BagScanner.
+The bag belonging to Passenger 4 has failed inspection.(A bag can fail inspection)
+Controller tells DocScanner to close.
+The bag belonging to Passenger 4 was sent to the Security Station by the BagScanner.
+Passenger 6 is sent to wait for Body Scanner 3 by the Doc Scanner.
+Passenger 6's bag is sent to wait for Bag Scanner 3 by the Doc Scanner.
+The bag belonging to Passenger 6 has passed inspection.
+The bag belonging to Passenger 6 was sent to the Security Station by the BagScanner.
+Bag 6 arrived at Security Station.
+Passenger 7 has invalid documentation.
+Passenger 6 has passed inspection.
+Passenger 6 has been sent to the Security Station by the BodyScanner.
+DocScanner tells all BodyScanners and BagScanners to close. (Doc scanner tells all the bag scanners and body scanners to close)
+Bodyscanner 1 tells securityStation 1 that it's closed.(Body scanners can close)
+Bagscanner 1 tells securityStation 1 that it's closed.(bag scanners can close)
+Bodyscanner 2 tells securityStation 2 that it's closed.
+Bagscanner 2 tells securityStation 2 that it's closed.
+Bodyscanner 3 tells securityStation 3 that it's closed.
+Bagscanner 3 tells securityStation 3 that it's closed.
+Bodyscanner 4 tells securityStation 4 that it's closed.
+DocScanner closed. (a DocScanner can close)
+Bagscanner 4 tells securityStation 4 that it's closed.
+Bodyscanner 5 tells securityStation 5 that it's closed.
+Bagscanner 5 tells securityStation 5 that it's closed.
+Scanner 5 closed
+Scanner 5 closed
+SecurityStation 5 tells the Jail that 5 line has closed.(security stations can only close when both scanners have closed as you can see by the fact that two print statments with scanner 5 closed)
+SecurityStation 5 closed.
+Bag 4 arrived at Security Station.
+Bag 2 arrived at Security Station.
+Bag 3 arrived at Security Station.
+Passenger 6 arrived at Security Station.
+Passenger 2 passed the security check and heads to a flight.
+Scanner 1 closed
+Scanner 1 closed
+SecurityStation 1 tells the Jail that 1 line has closed.
+SecurityStation 1 closed.
+Passenger 3 passed the security check and heads to a flight.
+Scanner 2 closed
+Scanner 2 closed
+SecurityStation 2 tells the Jail that 2 line has closed.
+SecurityStation 2 closed.
+Passenger 4 failed the security check and heads to jail by the Security Station.
+(A passenger can fail a security check because his bag failed the bag scan which can be seen in an earlier comment)
+Passenger 6 passed the security check and heads to a flight.
+Scanner 4 closed
+Scanner 4 closed
+SecurityStation 4 tells the Jail that 4 line has closed.
+SecurityStation 4 closed.
+Passenger 4 is recieved by the jail(a passenger that fails one or both of the scans is sent to jail)
+Passenger 4 is put in jail.(Passengers sent to jail are put in the holding cells)
+Scanner 3 closed
+Scanner 3 closed
+SecurityStation 3 tells the Jail that 3 line has closed.
+SecurityStation 3 closed.
+Passenger 4 is being sent to permanent lockup.(passengers in jail at the end of the day are sent to permanent lockup)
+All passengers in permanent lockup. Jail is closing for the day.
+Jail tells the controller it has closed.Controller tells Jail to close.
+(Jail is now closed because all security stations closed and passengers in jail are all sent to permanent lockup)
+Controller tells itself to close.
+System is shutting down.(Controller closes which leads to the system shutting down)
